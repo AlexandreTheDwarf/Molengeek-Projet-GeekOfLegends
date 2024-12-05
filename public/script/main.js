@@ -347,7 +347,7 @@ async function game() {
             playSound("./public/sound/hadouken.mp3");
             await sleep(5000); // Ajoute un délai de 1 seconde après chaque attaque du boss
         }
-    } while (heros.length > 0 || bossGame.vie > 0); // Continue tant que les héros sont vivants et que le boss n'est pas mort
+    } while (heros.length > 0 && bossGame.vie > 0); // Continue tant que les héros sont vivants et que le boss n'est pas mort
 }
 
 
