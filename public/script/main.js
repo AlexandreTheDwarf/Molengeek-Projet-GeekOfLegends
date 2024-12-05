@@ -11,6 +11,20 @@ function playSound(soundFile) {
     audioPlayer.play();           // Joue le son
 }
 
+function endGame(result) {
+    if (result === "win") {
+        console.log("Félicitations, les héros ont gagné !");
+        playSound("./public/sound/victory.mp3");
+    } else if (result === "lose") {
+        console.log("Tous les héros sont morts, le boss a gagné !");
+        playSound("./public/sound/finish.mp3");
+    }
+
+    heros = [];
+    boss.forEach(b => b.vie = 0); 
+}
+
+
 // Création des Boss
 
 class Boss {
@@ -34,8 +48,10 @@ class Boss {
                     this.vie = 0; // Le boss est vaincu
                     console.log(`L'énigme a été résolue, ${this.nom} a été vaincu.`);
                     playSound("./public/sound/victory.mp3");
-                    await sleep(5000); 
-                } else {
+                    await sleep(5000);
+                    endGame("win"); // Ajoute une fonction pour signaler la fin
+                    return;
+                }else {
                     console.log(`Ce n'est pas la bonne réponse, adieu. ${this.nom} utilise "Mort de masse".`);
                     await sleep(5000); 
                     heros = []; 
@@ -325,30 +341,28 @@ async function game() {
         // Les héros attaquent
         for (let element of heros) {
             await element.attack(bossGame);
-            await sleep(5000); // Ajoute un délai de 1 seconde après chaque attaque de héros
+            await sleep(5000);
         }
 
         // Vérifie si le boss est mort
         if (bossGame.vie <= 0) {
-            console.log(`${bossGame.nom} est mort, les héros ont gagné !`);
-            playSound("./public/sound/victory.mp3");
-            await sleep(10000);
-            break; // On arrête la boucle si le boss est mort
+            endGame("win");
+            break;
         } 
-        else if (heros.length <= 0){
-            playSound("./public/sound/finish.mp3");
-            console.log("Tous les héros sont mort")
-            await sleep(10000);
-            break; // On arrête la boucle si les aventuriers sont mort
+        // Vérifie si tous les héros sont morts
+        else if (heros.length <= 0) {
+            endGame("lose");
+            break;
         }
         else {
             // Le boss attaque
-            bossGame.attack();
+            await bossGame.attack();
             playSound("./public/sound/hadouken.mp3");
-            await sleep(5000); // Ajoute un délai de 1 seconde après chaque attaque du boss
+            await sleep(5000);
         }
-    } while (heros.length > 0 && bossGame.vie > 0); // Continue tant que les héros sont vivants et que le boss n'est pas mort
+    } while (heros.length > 0 && bossGame.vie > 0);
 }
+
 
 
 
