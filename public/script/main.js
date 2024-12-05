@@ -14,49 +14,56 @@ function playSound(soundFile) {
 // Création des Boss
 
 class Boss {
-    constructor(nom, attaque, vie){
-        this.nom = nom
-        this.attaque = attaque
-        this.vie = vie
-        this.attack = () => {
-            if (heros.length > 0) {
-                if (this.vie >= this.vie*0.25){
-                    alert(`${this.nom} n'a plus beaucoup de point de vie, il pose un ultimatum`)
-                    let answer = prompt("Jamais je ne suis loin de mon autre jumelle. On m'associe souvent, au parfum vomitif. D'une partie du corps pas vraiment belle. Localisée fort loin de l'organe olfactif ? Qui suis je ?")
-                    answer = answer.toLowerCase()
-                    if (answer == "chaussette" || answer == "chaussettes" ){
-                        this.vie = 0
-                        console.log(`L'énigme a été résolu, ${this.nom} a été vaincu`)
-                    }
-                    else{
-                        console.log(`Ce n'est pas la bonne réponse, adieu, ${this.nom} utilise "Mort de masse"`)
-                        playSound("./public/sound/finish.mp3");
-                        heros = []
-                    }
+    constructor(nom, attaque, vie) {
+        this.nom = nom;
+        this.attaque = attaque;
+        this.vie = vie;
+        this.vieInitiale = vie; // Stocke la vie maximale pour les calculs
+    }
+
+    async attack() { 
+        if (heros.length > 0) {
+            // Vérifie si la vie est à 25% ou moins
+            if (this.vie <= this.vieInitiale * 0.25) {
+                alert(`${this.nom} n'a plus beaucoup de points de vie, il pose un ultimatum.`);
+                let answer = prompt(
+                    "Jamais je ne suis loin de mon autre jumelle. On m'associe souvent, au parfum vomitif. D'une partie du corps pas vraiment belle. Localisée fort loin de l'organe olfactif ? Qui suis-je ?"
+                );
+                answer = answer.toLowerCase();
+                if (answer === "chaussette" || answer === "chaussettes") {
+                    this.vie = 0; // Le boss est vaincu
+                    console.log(`L'énigme a été résolue, ${this.nom} a été vaincu.`);
+                    playSound("./public/sound/victory.mp3");
+                    await sleep(5000); 
+                } else {
+                    console.log(`Ce n'est pas la bonne réponse, adieu. ${this.nom} utilise "Mort de masse".`);
+                    await sleep(5000); 
+                    heros = []; 
                 }
-                else{
-                    // Sélection aléatoire d'un héros
-                    let targetIndex = Math.floor(Math.random() * heros.length);
-                    let target = heros[targetIndex];
-            
-                    // Calcul des dégâts infligés par le boss
-                    let dmg = this.attaque;
-                    target.vie -= dmg;
-            
-                    console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
-                    
-                    // Vérifie si le héros est mort
-                    if (target.vie <= 0) {
-                        console.log(`${target.nom} est mort au combat.`);
-                        heros = heros.filter(h => h.vie > 0); // Retire les héros morts
-                    }
-                }
+                return; // Arrête l'attaque si l'ultimatum est déclenché
             } else {
-                console.log("Tous les héros sont morts, le boss a gagné !");
+                // Sélection aléatoire d'un héros
+                let targetIndex = Math.floor(Math.random() * heros.length);
+                let target = heros[targetIndex];
+
+                // Calcul des dégâts infligés par le boss
+                let dmg = this.attaque;
+                target.vie -= dmg;
+
+                console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
+
+                // Vérifie si le héros est mort
+                if (target.vie <= 0) {
+                    console.log(`${target.nom} est mort au combat.`);
+                    heros = heros.filter(h => h.vie > 0); // Retire les héros morts
+                }
             }
+        } else {
+            console.log("Tous les héros sont morts, le boss a gagné !");
         }
     }
 }
+
 
 let Sauron = new Boss ("Sauron", 35, 300)
 let Chronos = new Boss ("Chronos", 25, 400)
@@ -322,6 +329,7 @@ async function game() {
         }
 
     } while (heros.length > 0 && bossGame.vie > 0); // Continue tant que les héros sont vivants et que le boss n'est pas mort
+    playSound("./public/sound/finish.mp3");
     console.log("Tous les héros sont mort")
 }
 
