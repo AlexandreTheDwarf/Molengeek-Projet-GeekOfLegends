@@ -46,15 +46,22 @@ class Boss {
                 let targetIndex = Math.floor(Math.random() * heros.length);
                 let target = heros[targetIndex];
 
-                // Calcul des dégâts infligés par le boss
-                let dmg = this.attaque;
-                target.vie -= dmg;
-
-                console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
+                if (target.posture == "defense"){
+                    // Calcul des dégâts infligés par le boss
+                    let dmg = this.attaque / 2;
+                    target.vie -= dmg;
+                    console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
+                }else{
+                    // Calcul des dégâts infligés par le boss
+                    let dmg = this.attaque;
+                    target.vie -= dmg;
+                    console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
+                }
 
                 // Vérifie si le héros est mort
                 if (target.vie <= 0) {
                     console.log(`${target.nom} est mort au combat.`);
+                    await sleep(5000); 
                     heros = heros.filter(h => h.vie > 0); // Retire les héros morts
                 }
             }
@@ -91,7 +98,7 @@ class Guerrier extends Heros {
         this.attack = (boss) =>{
             if (this.vie > 1){
                 if(this.posture == "attaque"){
-                    if (rage<4){
+                    if (this.rage < 4){
                         let dmg = this.attaque * 1.2
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
@@ -103,11 +110,11 @@ class Guerrier extends Heros {
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
                         playSound("./public/sound/sword.mp3");
-                        rage = 0
+                        this.rage = 0
                     }
                 }
                 else{
-                    if (rage<4){
+                    if (this.rage < 4){
                         let dmg = this.attaque 
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
@@ -119,7 +126,7 @@ class Guerrier extends Heros {
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
                         playSound("./public/sound/sword.mp3");
-                        rage = 0
+                        this.rage = 0
                     }
                 }
             }
@@ -149,6 +156,7 @@ class Mage extends Heros {
                     }
                     else{
                         console.log(`${this.nom} n'a plus de mana, il se regenere de 7`)
+                        playSound("./public/sound/mana.mp3");
                         this.mana += 7
                     }
                 }
@@ -162,6 +170,7 @@ class Mage extends Heros {
                     }
                     else{
                         console.log(`${this.nom} n'a plus de mana, il se regenere de 7`)
+                        playSound("./public/sound/mana.mp3");
                         this.mana += 7
                     }
                 }
@@ -193,6 +202,7 @@ class Archer extends Heros {
                         }
                         else{
                             console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            playSound("./public/sound/craft.mp3");
                             this.fleche += 6
                         }
                     }
@@ -205,8 +215,9 @@ class Archer extends Heros {
                             this.fleche -= 2
                         }
                         else{
-                            console.log(`${this.nom} n'a plus de mana, il se regenere de 7`)
-                            this.fleche += 7
+                            console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            playSound("./public/sound/craft.mp3");
+                            this.fleche += 6
                         }
                     }
                 }
@@ -221,6 +232,7 @@ class Archer extends Heros {
                         }
                         else{
                             console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            playSound("./public/sound/craft.mp3");
                             this.fleche += 6
                         }
                     }
@@ -233,8 +245,9 @@ class Archer extends Heros {
                             this.fleche -= 2
                         }
                         else{
-                            console.log(`${this.nom} n'a plus de mana, il se regenere de 7`)
-                            this.fleche += 7
+                            console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            playSound("./public/sound/craft.mp3");
+                            this.fleche += 6
                         }
                     }
                 } 
@@ -321,17 +334,20 @@ async function game() {
             playSound("./public/sound/victory.mp3");
             await sleep(10000);
             break; // On arrête la boucle si le boss est mort
-        } else {
+        } 
+        else if (heros.length <= 0){
+            playSound("./public/sound/finish.mp3");
+            console.log("Tous les héros sont mort")
+            await sleep(10000);
+            break; // On arrête la boucle si les aventuriers sont mort
+        }
+        else {
             // Le boss attaque
             bossGame.attack();
             playSound("./public/sound/hadouken.mp3");
             await sleep(5000); // Ajoute un délai de 1 seconde après chaque attaque du boss
         }
-        
-
-    } while (heros.length > 0 && bossGame.vie > 0); // Continue tant que les héros sont vivants et que le boss n'est pas mort
-    playSound("./public/sound/finish.mp3");
-    console.log("Tous les héros sont mort")
+    } while (heros.length > 0 || bossGame.vie > 0); // Continue tant que les héros sont vivants et que le boss n'est pas mort
 }
 
 
