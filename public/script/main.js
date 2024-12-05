@@ -1,3 +1,16 @@
+// Bonus : 
+
+// Récupère l'élément audio et son source
+const audioPlayer = document.getElementById("audioPlayer");
+const audioSource = document.getElementById("audioSource");
+
+// Fonction pour changer la source et jouer le son
+function playSound(soundFile) {
+    audioSource.src = soundFile; // Change la source du son
+    audioPlayer.load();           // Recharge l'élément audio avec la nouvelle source
+    audioPlayer.play();           // Joue le son
+}
+
 // Création des Boss
 
 class Boss {
@@ -7,7 +20,7 @@ class Boss {
         this.vie = vie
         this.attack = () => {
             if (heros.length > 0) {
-                if (this.vie <= this.vie*0.25){
+                if (this.vie >= this.vie*0.25){
                     alert(`${this.nom} n'a plus beaucoup de point de vie, il pose un ultimatum`)
                     let answer = prompt("Jamais je ne suis loin de mon autre jumelle. On m'associe souvent, au parfum vomitif. D'une partie du corps pas vraiment belle. Localisée fort loin de l'organe olfactif ? Qui suis je ?")
                     answer = answer.toLowerCase()
@@ -17,6 +30,7 @@ class Boss {
                     }
                     else{
                         console.log(`Ce n'est pas la bonne réponse, adieu, ${this.nom} utilise "Mort de masse"`)
+                        playSound("./public/sound/finish.mp3");
                         heros = []
                     }
                 }
@@ -74,12 +88,14 @@ class Guerrier extends Heros {
                         let dmg = this.attaque * 1.2
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                        playSound("./public/sound/sword.mp3");
                         this.rage += 1
                     }
                     else{
                         let dmg = this.attaque * 1.2 * 1.25
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
+                        playSound("./public/sound/sword.mp3");
                         rage = 0
                     }
                 }
@@ -88,18 +104,21 @@ class Guerrier extends Heros {
                         let dmg = this.attaque 
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                        playSound("./public/sound/sword.mp3");
                         this.rage += 1
                     }
                     else{
                         let dmg = this.attaque * 1.25
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
+                        playSound("./public/sound/sword.mp3");
                         rage = 0
                     }
                 }
             }
             else{
                 console.log(`${this.nom} est mort, il ne peut donc plus se battre`)
+                playSound("./public/sound/mort.mp3");
                 heros = heros.filter(h => h.vie > 0);
             }
             
@@ -114,10 +133,11 @@ class Mage extends Heros {
         this.attack = (boss) =>{
             if (this.vie > 1){
                 if(this.posture == "attaque"){
-                    if (mana>=2){
+                    if (this.mana>=2){
                         let dmg = this.attaque * 1.2
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                        playSound("./public/sound/fireball.mp3");
                         this.mana -= 2
                     }
                     else{
@@ -126,10 +146,11 @@ class Mage extends Heros {
                     }
                 }
                 else{
-                    if (mana>=2){
+                    if (this.mana>=2){
                         let dmg = this.attaque
                         boss.vie = boss.vie - dmg
                         console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                        playSound("./public/sound/fireball.mp3");
                         this.mana -= 2
                     }
                     else{
@@ -140,6 +161,7 @@ class Mage extends Heros {
             }
             else{
                 console.log(`${this.nom} est mort, il ne peut donc plus se battre`)
+                playSound("./public/sound/mort.mp3");
                 heros = heros.filter(h => h.vie > 0);
             }
             
@@ -155,10 +177,11 @@ class Archer extends Heros {
             if (this.vie > 1){
                 if (Math.random() < 0.25){
                     if(this.posture == "attaque"){
-                        if (fleche>=2){
+                        if (this.fleche>=2){
                             let dmg = this.attaque * 1.2 * 1.50
                             boss.vie = boss.vie - dmg
                             console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                            playSound("./public/sound/arrow.mp3");
                             this.fleche -= 2
                         }
                         else{
@@ -167,10 +190,11 @@ class Archer extends Heros {
                         }
                     }
                     else{
-                        if (fleche>=2){
+                        if (this.fleche>=2){
                             let dmg = this.attaque * 1.50
                             boss.vie = boss.vie - dmg
                             console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                            playSound("./public/sound/arrow.mp3");
                             this.fleche -= 2
                         }
                         else{
@@ -181,10 +205,11 @@ class Archer extends Heros {
                 }
                 else{
                     if(this.posture == "attaque"){
-                        if (fleche>=2){
+                        if (this.fleche>=2){
                             let dmg = this.attaque * 1.2
                             boss.vie = boss.vie - dmg
                             console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                            playSound("./public/sound/arrow.mp3");
                             this.fleche -= 2
                         }
                         else{
@@ -193,10 +218,11 @@ class Archer extends Heros {
                         }
                     }
                     else{
-                        if (fleche>=2){
+                        if (this.fleche>=2){
                             let dmg = this.attaque
                             boss.vie = boss.vie - dmg
                             console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                            playSound("./public/sound/arrow.mp3");
                             this.fleche -= 2
                         }
                         else{
@@ -208,6 +234,7 @@ class Archer extends Heros {
             }
             else{
                 console.log(`${this.nom} est mort, il ne peut donc plus se battre`)
+                playSound("./public/sound/mort.mp3");
                 heros = heros.filter(h => h.vie > 0);
             }
             
@@ -253,8 +280,8 @@ document.querySelector("form").addEventListener("submit", function (event) {
 
     // Création des objets
     let guerrier = new Guerrier(GNom, GPosture, GAttaque, GVie, "0");
-    let mage = new Mage(MNom, MPosture, MAttaque, MVie, "7");
-    let archer = new Archer(ANom, APosture, AAttaque, AVie, "6");
+    let mage = new Mage(MNom, MPosture, MAttaque, MVie, "1");
+    let archer = new Archer(ANom, APosture, AAttaque, AVie, "2");
 
     // Ajout des héros à l'array
     heros.push(guerrier);
@@ -278,17 +305,20 @@ async function game() {
         // Les héros attaquent
         for (let element of heros) {
             await element.attack(bossGame);
-            await sleep(1000); // Ajoute un délai de 1 seconde après chaque attaque de héros
+            await sleep(5000); // Ajoute un délai de 1 seconde après chaque attaque de héros
         }
 
         // Vérifie si le boss est mort
         if (bossGame.vie <= 0) {
             console.log(`${bossGame.nom} est mort, les héros ont gagné !`);
+            playSound("./public/sound/victory.mp3");
+            await sleep(10000);
             break; // On arrête la boucle si le boss est mort
         } else {
             // Le boss attaque
             bossGame.attack();
-            await sleep(1000); // Ajoute un délai de 1 seconde après chaque attaque du boss
+            playSound("./public/sound/hadouken.mp3");
+            await sleep(5000); // Ajoute un délai de 1 seconde après chaque attaque du boss
         }
 
     } while (heros.length > 0 && bossGame.vie > 0); // Continue tant que les héros sont vivants et que le boss n'est pas mort
