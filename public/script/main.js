@@ -29,9 +29,9 @@ class Boss {
     }
 }
 
-let Sauron = new Boss ("Sauron", 15, 300)
-let Chronos = new Boss ("Chronos", 10, 400)
-let Lilith = new Boss ("Lilith", 20, 200)
+let Sauron = new Boss ("Sauron", 35, 300)
+let Chronos = new Boss ("Chronos", 25, 400)
+let Lilith = new Boss ("Lilith", 40, 200)
 
 let boss = [Sauron, Chronos, Lilith]
 
@@ -52,33 +52,33 @@ class Guerrier extends Heros {
     constructor(nom, posture, attaque, vie, rage){
         super(nom, posture, attaque, vie)
         this.rage = rage
-        this.attack = () =>{
+        this.attack = (boss) =>{
             if (this.vie > 1){
                 if(this.posture == "attaque"){
                     if (rage<4){
                         let dmg = this.attaque * 1.2
-                        Boss.vie = Boss.vie - dmg
-                        console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                        boss.vie = boss.vie - dmg
+                        console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                         this.rage += 1
                     }
                     else{
                         let dmg = this.attaque * 1.2 * 1.25
-                        Boss.vie = Boss.vie - dmg
-                        console.log(`${this.nom} est enragé, il attaque ${Boss.nom} pour un total de ${this.dmg}`)
+                        boss.vie = boss.vie - dmg
+                        console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
                         rage = 0
                     }
                 }
                 else{
                     if (rage<4){
                         let dmg = this.attaque 
-                        Boss.vie = Boss.vie - dmg
-                        console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                        boss.vie = boss.vie - dmg
+                        console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                         this.rage += 1
                     }
                     else{
                         let dmg = this.attaque * 1.25
-                        Boss.vie = Boss.vie - dmg
-                        console.log(`${this.nom} est enragé, il attaque ${Boss.nom} pour un total de ${this.dmg}`)
+                        boss.vie = boss.vie - dmg
+                        console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
                         rage = 0
                     }
                 }
@@ -96,13 +96,13 @@ class Mage extends Heros {
     constructor(nom, posture, attaque, vie, mana){
         super(nom, posture, attaque, vie)
         this.mana = mana
-        this.attack = () =>{
+        this.attack = (boss) =>{
             if (this.vie > 1){
                 if(this.posture == "attaque"){
                     if (mana=>2){
                         let dmg = this.attaque * 1.2
-                        Boss.vie = Boss.vie - dmg
-                        console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                        boss.vie = boss.vie - dmg
+                        console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                         this.mana -= 2
                     }
                     else{
@@ -113,8 +113,8 @@ class Mage extends Heros {
                 else{
                     if (mana=>2){
                         let dmg = this.attaque
-                        Boss.vie = Boss.vie - dmg
-                        console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                        boss.vie = boss.vie - dmg
+                        console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                         this.mana -= 2
                     }
                     else{
@@ -136,14 +136,14 @@ class Archer extends Heros {
     constructor(nom, posture, attaque, vie, fleche){
         super(nom, posture, attaque, vie)
         this.fleche = fleche
-        this.attack = () =>{
+        this.attack = (boss) =>{
             if (this.vie > 1){
-                if (Math.random(1,4) == 4){
+                if (Math.random() < 0.25){
                     if(this.posture == "attaque"){
                         if (fleche=>2){
                             let dmg = this.attaque * 1.2 * 1.50
-                            Boss.vie = Boss.vie - dmg
-                            console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                            boss.vie = boss.vie - dmg
+                            console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                             this.fleche -= 2
                         }
                         else{
@@ -154,8 +154,8 @@ class Archer extends Heros {
                     else{
                         if (fleche=>2){
                             let dmg = this.attaque * 1.50
-                            Boss.vie = Boss.vie - dmg
-                            console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                            boss.vie = boss.vie - dmg
+                            console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                             this.fleche -= 2
                         }
                         else{
@@ -168,8 +168,8 @@ class Archer extends Heros {
                     if(this.posture == "attaque"){
                         if (fleche=>2){
                             let dmg = this.attaque * 1.2
-                            Boss.vie = Boss.vie - dmg
-                            console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                            boss.vie = boss.vie - dmg
+                            console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                             this.fleche -= 2
                         }
                         else{
@@ -180,8 +180,8 @@ class Archer extends Heros {
                     else{
                         if (fleche=>2){
                             let dmg = this.attaque
-                            Boss.vie = Boss.vie - dmg
-                            console.log(`${this.nom} a attaqué ${Boss.nom} pour un total de ${this.dmg}`)
+                            boss.vie = boss.vie - dmg
+                            console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                             this.fleche -= 2
                         }
                         else{
@@ -214,16 +214,19 @@ document.querySelector("form").addEventListener("submit", function (event) {
     let GNom = document.getElementById("guerrier-nom").value;
     let GPosture = document.querySelector('input[name="guerrier-posture"]:checked').value;
     let GAttaque = parseInt(document.getElementById("guerrier-attaque").value, 10);
+    GAttaque.setAttribute("max",120);
     let GVie = parseInt(document.getElementById("guerrier-vie").value, 10);
 
     let MNom = document.getElementById("mage-nom").value;
     let MPosture = document.querySelector('input[name="mage-posture"]:checked').value;
     let MAttaque = parseInt(document.getElementById("mage-attaque").value, 10);
+    MAttaque.setAttribute("max",120-GAttaque);
     let MVie = parseInt(document.getElementById("mage-vie").value, 10);
 
     let ANom = document.getElementById("archer-nom").value;
     let APosture = document.querySelector('input[name="archer-posture"]:checked').value;
     let AAttaque = parseInt(document.getElementById("archer-attaque").value, 10);
+    AAttaque.setAttribute("max",120-GAttaque-MAttaque);
     let AVie = parseInt(document.getElementById("archer-vie").value, 10);
 
     // Création des objets
@@ -247,7 +250,7 @@ function game() {
     do {
         // Les héros attaquent
         heros.forEach(element => {
-            element.attack();
+            element.attack(bossGame); 
         });
 
         // Vérifie si le boss est mort
