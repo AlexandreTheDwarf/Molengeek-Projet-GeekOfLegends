@@ -47,7 +47,6 @@ class Boss {
                 if (answer === "chaussette" || answer === "chaussettes") {
                     this.vie = 0; // Le boss est vaincu
                     console.log(`L'énigme a été résolue, ${this.nom} a été vaincu.`);
-                    playSound("./public/sound/victory.mp3");
                     await sleep(5000);
                     endGame("win"); // Ajoute une fonction pour signaler la fin
                     return;
@@ -67,11 +66,13 @@ class Boss {
                     let dmg = this.attaque / 2;
                     target.vie -= dmg;
                     console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
+                    playSound("./public/sound/hadouken.mp3");
                 }else{
                     // Calcul des dégâts infligés par le boss
                     let dmg = this.attaque;
                     target.vie -= dmg;
                     console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
+                    playSound("./public/sound/hadouken.mp3");
                 }
 
                 // Vérifie si le héros est mort
@@ -314,6 +315,11 @@ document.querySelector("form").addEventListener("submit", function (event) {
         return; // Arrêter la soumission du formulaire si ça dépasse la limite
     }
 
+    if (GNom == "" || GAttaque == "" || GVie == "" || MNom == "" || MAttaque == "" || MVie == "" || ANom == "" || AAttaque == "" || AVie == "" ){
+        alert("Une des valeurs manquantes");
+        return; // Arrêter la soumission du formulaire si ça dépasse la limite
+    }
+
     // Création des objets
     let guerrier = new Guerrier(GNom, GPosture, GAttaque, GVie, "0");
     let mage = new Mage(MNom, MPosture, MAttaque, MVie, "1");
@@ -357,7 +363,6 @@ async function game() {
         else {
             // Le boss attaque
             await bossGame.attack();
-            playSound("./public/sound/hadouken.mp3");
             await sleep(5000);
         }
     } while (heros.length > 0 && bossGame.vie > 0);

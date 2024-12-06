@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Geek Of Legends</title>
     <link rel="stylesheet" href="./public/css/style.css">
 </head>
 <body>
@@ -16,16 +16,20 @@
                 <input type="text" name="guerrier-nom" id="guerrier-nom" placeholder="Entrez un nom">
                 
                 <p>Posture :</p>
-                <label for="guerrier-posture-attaque">Attaque</label>
-                <input type="radio" name="guerrier-posture" id="guerrier-posture" value="attaque" checked>
-                <label for="guerrier-posture-defense">Défense</label>
-                <input type="radio" name="guerrier-posture" id="guerrier-posture" value="defense">
-                
-                <label for="guerrier-attaque">Points d'attaque :</label>
-                <input type="number" name="guerrier-attaque" id="guerrier-attaque" min="1" max="120" placeholder="1-120">
-                
-                <label for="guerrier-vie">Points de vie :</label>
-                <input type="number" name="guerrier-vie" id="guerrier-vie" min="1" max="150" placeholder="1-150">
+                <div>
+                    <label for="guerrier-posture-attaque">Attaque</label>
+                    <input type="radio" name="guerrier-posture" id="guerrier-posture" value="attaque" checked>
+                    <label for="guerrier-posture-defense">Défense</label>
+                    <input type="radio" name="guerrier-posture" id="guerrier-posture" value="defense">
+                </div>
+                <div>
+                    <label for="guerrier-attaque">Points d'attaque :</label>
+                    <input type="number" name="guerrier-attaque" id="guerrier-attaque" min="1" max="120" placeholder="1-120">
+                </div>
+                <div>
+                    <label for="guerrier-vie">Points de vie :</label>
+                    <input type="number" name="guerrier-vie" id="guerrier-vie" min="1" max="150" placeholder="1-150">
+                </div>
             </div>
         
             <div>
@@ -34,16 +38,20 @@
                 <input type="text" name="mage-nom" id="mage-nom" placeholder="Entrez un nom">
                 
                 <p>Posture :</p>
-                <label for="mage-posture-attaque">Attaque</label>
-                <input type="radio" name="mage-posture" id="mage-posture" value="attaque" checked>
-                <label for="mage-posture-defense">Défense</label>
-                <input type="radio" name="mage-posture" id="mage-posture" value="defense">
-                
-                <label for="mage-attaque">Points d'attaque :</label>
-                <input type="number" name="mage-attaque" id="mage-attaque" min="1" max="120" placeholder="1-120">
-                
-                <label for="mage-vie">Points de vie :</label>
-                <input type="number" name="mage-vie" id="mage-vie" min="1" max="150" placeholder="1-150">
+                <div>
+                    <label for="mage-posture-attaque">Attaque</label>
+                    <input type="radio" name="mage-posture" id="mage-posture" value="attaque" checked>
+                    <label for="mage-posture-defense">Défense</label>
+                    <input type="radio" name="mage-posture" id="mage-posture" value="defense">    
+                </div>
+                <div>
+                    <label for="mage-attaque">Points d'attaque :</label>
+                    <input type="number" name="mage-attaque" id="mage-attaque" min="1" max="120" placeholder="1-120">    
+                </div>
+                <div>
+                    <label for="mage-vie">Points de vie :</label>
+                    <input type="number" name="mage-vie" id="mage-vie" min="1" max="150" placeholder="1-150">    
+                </div>
             </div>
         
             <div>
@@ -52,19 +60,24 @@
                 <input type="text" name="archer-nom" id="archer-nom" placeholder="Entrez un nom">
                 
                 <p>Posture :</p>
-                <label for="archer-posture-attaque">Attaque</label>
-                <input type="radio" name="archer-posture" id="archer-posture" value="attaque" checked>
-                <label for="archer-posture-defense">Défense</label>
-                <input type="radio" name="archer-posture" id="archer-posture" value="defense">
-                
-                <label for="archer-attaque">Points d'attaque :</label>
-                <input type="number" name="archer-attaque" id="archer-attaque" min="1" max="120" placeholder="1-120">
-                
-                <label for="archer-vie">Points de vie :</label>
-                <input type="number" name="archer-vie" id="archer-vie" min="1" max="150" placeholder="1-150">
+                <div>
+                    <label for="archer-posture-attaque">Attaque</label>
+                    <input type="radio" name="archer-posture" id="archer-posture" value="attaque" checked>
+                    <label for="archer-posture-defense">Défense</label>
+                    <input type="radio" name="archer-posture" id="archer-posture" value="defense">    
+                </div>
+                <div>
+                    <label for="archer-attaque">Points d'attaque :</label>
+                    <input type="number" name="archer-attaque" id="archer-attaque" min="1" max="120" placeholder="1-120">    
+                </div>
+                <div>
+                    <label for="archer-vie">Points de vie :</label>
+                    <input type="number" name="archer-vie" id="archer-vie" min="1" max="150" placeholder="1-150">    
+                </div>
             </div>
-        
-            <button type="submit">Valider votre équipe</button>
+            <div class="form-footer">
+                <button type="submit">Valider votre équipe</button>
+            </div>
         </form>        
     </section>
     <section id="game">
