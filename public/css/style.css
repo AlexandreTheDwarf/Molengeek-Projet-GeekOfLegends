@@ -62,7 +62,7 @@ form > div > div{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-#audioPlayer {
+.hidden{
     width: 0;
     height: 0;
     visibility: hidden; /* Cache visuellement l'élément */

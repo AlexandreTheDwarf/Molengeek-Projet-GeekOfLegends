@@ -332,6 +332,9 @@ document.querySelector("form").addEventListener("submit", function (event) {
 
     console.log(heros);
 
+    let form = document.getElementById("createForm");
+    form.classList.add("hidden");
+
     // Lancer le jeu
     game();
 });
