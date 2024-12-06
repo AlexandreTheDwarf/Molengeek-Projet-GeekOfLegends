@@ -79,7 +79,7 @@ class Boss {
                     // Calcul des dégâts infligés par le boss
                     let dmg = this.attaque / 2;
                     target.vie -= dmg;
-                    ajouterMessage(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`)
+                    ajouterMessage(`${this.nom} attaque ${target.nom} qui se défend et il/elle ne subie que ${dmg} dégâts.`)
                     console.log(`${this.nom} attaque ${target.nom} pour ${dmg} dégâts.`);
                     playSound("./public/sound/hadouken.mp3");
                 }else{
@@ -93,7 +93,7 @@ class Boss {
 
                 // Vérifie si le héros est mort
                 if (target.vie <= 0) {
-                    ajouterMessage(`${target.nom} est mort au combat.`)
+                    ajouterMessage(`✞ ${target.nom} est mort au combat.`)
                     console.log(`${target.nom} est mort au combat.`);
                     await sleep(5000); 
                     heros = heros.filter(h => h.vie > 0); // Retire les héros morts
@@ -144,8 +144,8 @@ class Guerrier extends Heros {
                     else{
                         let dmg = this.attaque * 1.2 * 1.25
                         boss.vie = boss.vie - dmg
-                        ajouterMessage(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
-                        console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
+                        ajouterMessage(`💢 ${this.nom} est enragé, il/elle attaque ${boss.nom} pour un total de ${dmg}`)
+                        console.log(`${this.nom} est enragé, il/elle attaque ${boss.nom} pour un total de ${dmg}`)
                         playSound("./public/sound/sword.mp3");
                         this.rage = 0
                     }
@@ -162,16 +162,16 @@ class Guerrier extends Heros {
                     else{
                         let dmg = this.attaque * 1.25
                         boss.vie = boss.vie - dmg
-                        ajouterMessage(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
-                        console.log(`${this.nom} est enragé, il attaque ${boss.nom} pour un total de ${dmg}`)
+                        ajouterMessage(`💢 ${this.nom} est enragé, il/elle attaque ${boss.nom} pour un total de ${dmg}`)
+                        console.log(`${this.nom} est enragé, il/elle attaque ${boss.nom} pour un total de ${dmg}`)
                         playSound("./public/sound/sword.mp3");
                         this.rage = 0
                     }
                 }
             }
             else{
-                ajouterMessage(`${this.nom} est mort, il ne peut donc plus se battre`)
-                console.log(`${this.nom} est mort, il ne peut donc plus se battre`)
+                ajouterMessage(`${this.nom} est mort, il/elle ne peut donc plus se battre`)
+                console.log(`${this.nom} est mort, il/elle ne peut donc plus se battre`)
                 playSound("./public/sound/mort.mp3");
                 heros = heros.filter(h => h.vie > 0);
             }
@@ -196,8 +196,8 @@ class Mage extends Heros {
                         this.mana -= 2
                     }
                     else{
-                        ajouterMessage(`${this.nom} n'a plus de mana, il se regenere de 7`)
-                        console.log(`${this.nom} n'a plus de mana, il se regenere de 7`)
+                        ajouterMessage(`✨ ${this.nom} n'a plus de mana, il/elle se regenere de 7`)
+                        console.log(` ${this.nom} n'a plus de mana, il/elle se regenere de 7`)
                         playSound("./public/sound/mana.mp3");
                         this.mana += 7
                     }
@@ -212,16 +212,16 @@ class Mage extends Heros {
                         this.mana -= 2
                     }
                     else{
-                        ajouterMessage(`${this.nom} n'a plus de mana, il se regenere de 7`)
-                        console.log(`${this.nom} n'a plus de mana, il se regenere de 7`)
+                        ajouterMessage(`✨ ${this.nom} n'a plus de mana, il/elle se regenere de 7`)
+                        console.log(`${this.nom} n'a plus de mana, il/elle se regenere de 7`)
                         playSound("./public/sound/mana.mp3");
                         this.mana += 7
                     }
                 }
             }
             else{
-                ajouterMessage(`${this.nom} est mort, il ne peut donc plus se battre`)
-                console.log(`${this.nom} est mort, il ne peut donc plus se battre`)
+                ajouterMessage(`${this.nom} est mort, il/elle ne peut donc plus se battre`)
+                console.log(`${this.nom} est mort, il/elle ne peut donc plus se battre`)
                 playSound("./public/sound/mort.mp3");
                 heros = heros.filter(h => h.vie > 0);
             }
@@ -241,14 +241,14 @@ class Archer extends Heros {
                         if (this.fleche>=2){
                             let dmg = this.attaque * 1.2 * 1.50
                             boss.vie = boss.vie - dmg
-                            ajouterMessage(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                            ajouterMessage(`🎯 ${this.nom} vise le point faible de ${boss.nom} et réalise un critique pour un total de ${dmg}`)
                             console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                             playSound("./public/sound/arrow.mp3");
                             this.fleche -= 2
                         }
                         else{
-                            ajouterMessage(`${this.nom} n'a plus de fleche, il en fabrique 6`)
-                            console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            ajouterMessage(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
+                            console.log(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
                             playSound("./public/sound/craft.mp3");
                             this.fleche += 6
                         }
@@ -257,14 +257,14 @@ class Archer extends Heros {
                         if (this.fleche>=2){
                             let dmg = this.attaque * 1.50
                             boss.vie = boss.vie - dmg
-                            ajouterMessage(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
+                            ajouterMessage(`${this.nom} vise le point faible de ${boss.nom} et réalise un critique pour un total de ${dmg}`)
                             console.log(`${this.nom} a attaqué ${boss.nom} pour un total de ${dmg}`)
                             playSound("./public/sound/arrow.mp3");
                             this.fleche -= 2
                         }
                         else{
-                            ajouterMessage(`${this.nom} n'a plus de fleche, il en fabrique 6`)
-                            console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            ajouterMessage(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
+                            console.log(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
                             playSound("./public/sound/craft.mp3");
                             this.fleche += 6
                         }
@@ -281,8 +281,8 @@ class Archer extends Heros {
                             this.fleche -= 2
                         }
                         else{
-                            ajouterMessage(`${this.nom} n'a plus de fleche, il en fabrique 6`)
-                            console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            ajouterMessage(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
+                            console.log(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
                             playSound("./public/sound/craft.mp3");
                             this.fleche += 6
                         }
@@ -297,8 +297,8 @@ class Archer extends Heros {
                             this.fleche -= 2
                         }
                         else{
-                            ajouterMessage(`${this.nom} n'a plus de fleche, il en fabrique 6`)
-                            console.log(`${this.nom} n'a plus de fleche, il en fabrique 6`)
+                            ajouterMessage(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
+                            console.log(`${this.nom} n'a plus de fleche, il/elle en fabrique 6`)
                             playSound("./public/sound/craft.mp3");
                             this.fleche += 6
                         }
